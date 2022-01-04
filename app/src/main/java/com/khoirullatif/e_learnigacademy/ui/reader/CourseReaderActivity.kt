@@ -2,6 +2,7 @@ package com.khoirullatif.e_learnigacademy.ui.reader
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import com.khoirullatif.e_learnigacademy.R
 import com.khoirullatif.e_learnigacademy.ui.reader.content.ModuleContentFragment
 import com.khoirullatif.e_learnigacademy.ui.reader.list.ModuleListFragment
@@ -16,10 +17,13 @@ class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_reader)
 
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+
         val bundle = intent.extras
         if (bundle != null) {
             val courseId = bundle.getString(EXTRA_COURSE_ID)
             if (courseId != null) {
+                viewModel.setSelectedCourse(courseId)
                 populateFragment()
             }
         }

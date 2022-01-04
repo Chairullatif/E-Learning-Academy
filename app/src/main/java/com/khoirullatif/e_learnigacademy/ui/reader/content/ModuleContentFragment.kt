@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.khoirullatif.e_learnigacademy.R
 import com.khoirullatif.e_learnigacademy.data.ContentEntity
+import com.khoirullatif.e_learnigacademy.data.ModuleEntity
 import com.khoirullatif.e_learnigacademy.databinding.FragmentModuleContentBinding
+import com.khoirullatif.e_learnigacademy.ui.reader.CourseReaderViewModel
 
 class ModuleContentFragment : Fragment() {
 
@@ -30,12 +33,16 @@ class ModuleContentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val content = ContentEntity("<h3 class=\\\\\\\"fr-text-bordered\\\\\\\">Contoh Content</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>")
+            //to using "share ViewModel" parameter this can replace with requireActivity
+            //so this fragment will not create new ViewModel
+            val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+            //didn't need moduleId again, because it was already set in ModuleListFragment (that's why the name is "share ViewModel")
+            val content = viewModel.getSelectedModule()
             populateWebView(content)
         }
     }
 
-    private fun populateWebView(content: ContentEntity) {
-        fragmentModuleContentBinding.webView.loadData(content.content ?: "", "text/html", "UTF-8")
+    private fun populateWebView(content: ModuleEntity) {
+        fragmentModuleContentBinding.webView.loadData(content.contentEntity?.content ?: "", "text/html", "UTF-8")
     }
 }
