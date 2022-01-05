@@ -9,12 +9,12 @@ class CourseReaderViewModel : ViewModel() {
     private lateinit var courseId: String
     private lateinit var moduleId: String
 
-    fun setSelectedCourse(id: String) {
-        this.courseId = id
+    fun setSelectedCourse(courseId: String) {
+        this.courseId = courseId
     }
 
-    fun setSelectedModule(id: String) {
-        this.moduleId = id
+    fun setSelectedModule(moduleId: String) {
+        this.moduleId = moduleId
     }
 
     fun getModules(): List<ModuleEntity> = DataDummy.generateDummyModules(courseId)
