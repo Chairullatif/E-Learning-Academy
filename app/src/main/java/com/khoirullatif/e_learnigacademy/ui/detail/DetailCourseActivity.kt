@@ -16,6 +16,7 @@ import com.khoirullatif.e_learnigacademy.databinding.ActivityDetailCourseBinding
 import com.khoirullatif.e_learnigacademy.databinding.ContentDetailCourseBinding
 import com.khoirullatif.e_learnigacademy.ui.reader.CourseReaderActivity
 import com.khoirullatif.e_learnigacademy.utils.DataDummy
+import com.khoirullatif.e_learnigacademy.viewmodel.ViewModelFactory
 
 class DetailCourseActivity : AppCompatActivity() {
 
@@ -42,7 +43,11 @@ class DetailCourseActivity : AppCompatActivity() {
         val adapter = DetailCourseAdapter()
 
         val bundle = intent.extras
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailCourseViewModel::class.java]
+        //            SEBELUM PAKE REPOSITORY
+//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailCourseViewModel::class.java]
+
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[DetailCourseViewModel::class.java]
 
         if (bundle != null) {
             val courseId = bundle.getString(EXTRA_COURSE)

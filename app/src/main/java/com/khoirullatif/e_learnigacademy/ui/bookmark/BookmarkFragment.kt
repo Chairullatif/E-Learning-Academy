@@ -12,6 +12,7 @@ import com.khoirullatif.e_learnigacademy.R
 import com.khoirullatif.e_learnigacademy.data.CourseEntity
 import com.khoirullatif.e_learnigacademy.databinding.FragmentBookmarkBinding
 import com.khoirullatif.e_learnigacademy.utils.DataDummy
+import com.khoirullatif.e_learnigacademy.viewmodel.ViewModelFactory
 
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
@@ -30,7 +31,12 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[BookmarkViewModel::class.java]
+//            SEBELUM PAKE REPOSITORY
+//            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[BookmarkViewModel::class.java]
+
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel = ViewModelProvider(this, factory)[BookmarkViewModel::class.java]
+
             val course = viewModel.getBookmarks()
             val adapter = BookmarkAdapter(this)
             adapter.setCourses(course)

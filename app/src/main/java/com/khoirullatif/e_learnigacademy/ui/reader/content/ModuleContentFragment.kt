@@ -11,6 +11,7 @@ import com.khoirullatif.e_learnigacademy.data.ContentEntity
 import com.khoirullatif.e_learnigacademy.data.ModuleEntity
 import com.khoirullatif.e_learnigacademy.databinding.FragmentModuleContentBinding
 import com.khoirullatif.e_learnigacademy.ui.reader.CourseReaderViewModel
+import com.khoirullatif.e_learnigacademy.viewmodel.ViewModelFactory
 
 class ModuleContentFragment : Fragment() {
 
@@ -35,7 +36,12 @@ class ModuleContentFragment : Fragment() {
         if (activity != null) {
             //to using "share ViewModel" parameter this can replace with requireActivity
             //so this fragment will not create new ViewModel
-            val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+            //            SEBELUM PAKE REPOSITORY
+//            val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
+
             //didn't need moduleId again, because it was already set in ModuleListFragment (that's why the name is "share ViewModel")
             val content = viewModel.getSelectedModule()
             populateWebView(content)

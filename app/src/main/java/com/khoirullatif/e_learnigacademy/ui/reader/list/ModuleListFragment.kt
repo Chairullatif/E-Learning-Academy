@@ -14,6 +14,7 @@ import com.khoirullatif.e_learnigacademy.databinding.FragmentModuleListBinding
 import com.khoirullatif.e_learnigacademy.ui.reader.CourseReaderActivity
 import com.khoirullatif.e_learnigacademy.ui.reader.CourseReaderCallback
 import com.khoirullatif.e_learnigacademy.ui.reader.CourseReaderViewModel
+import com.khoirullatif.e_learnigacademy.viewmodel.ViewModelFactory
 
 class ModuleListFragment : Fragment(), MyAdapterClickListener {
 
@@ -40,7 +41,12 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         super.onViewCreated(view, savedInstanceState)
         //to using "share ViewModel" parameter this can replace with requireActivity
         //so this fragment will not create new ViewModel
-        viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+        //            SEBELUM PAKE REPOSITORY
+//        viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
+
         adapter = ModuleListAdapter(this)
         //ini dummy, nanti a14 akan diganti sesuai dengan posisi fragment
 //        populateRecyclerView(DataDummy.generateDummyModules("a14"))
