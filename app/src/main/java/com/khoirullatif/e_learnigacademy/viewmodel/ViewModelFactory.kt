@@ -38,7 +38,7 @@ class ViewModelFactory private constructor(private val mAcademyRepository: Acade
             modelClass.isAssignableFrom(CourseReaderViewModel::class.java) -> {
                 CourseReaderViewModel(mAcademyRepository) as T
             }
-            else -> throw Throwable("Unknow ViewModel class: " + modelClass.name)
+            else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
     }
 }

@@ -43,8 +43,15 @@ class ModuleContentFragment : Fragment() {
             val viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
 
             //didn't need moduleId again, because it was already set in ModuleListFragment (that's why the name is "share ViewModel")
-            val content = viewModel.getSelectedModule()
-            populateWebView(content)
+            fragmentModuleContentBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getSelectedModule().observe(requireActivity(), { module ->
+                fragmentModuleContentBinding.progressBar.visibility = View.GONE
+                if (module != null) {
+                    populateWebView(module)
+                }
+            })
+//            val content = viewModel.getSelectedModule()
+//            populateWebView(content)
         }
     }
 

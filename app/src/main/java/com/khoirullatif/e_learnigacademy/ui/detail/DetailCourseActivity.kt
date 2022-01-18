@@ -2,6 +2,7 @@ package com.khoirullatif.e_learnigacademy.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
@@ -52,10 +53,21 @@ class DetailCourseActivity : AppCompatActivity() {
         if (bundle != null) {
             val courseId = bundle.getString(EXTRA_COURSE)
             if (courseId != null) {
+
+                detailContentBinding.progressBar.visibility = View.VISIBLE
+
                 viewModel.setSelectedCourse(courseId)
-                val modules = viewModel.getModule()
-                adapter.setModules(modules)
-                populateCourse(viewModel.getCourse())
+//                val modules = viewModel.getModule()
+//                adapter.setModules(modules)
+//                populateCourse(viewModel.getCourse())
+                viewModel.getModule().observe(this, { modules ->
+                    detailContentBinding.progressBar.visibility = View.GONE
+                    adapter.setModules(modules)
+                    adapter.notifyDataSetChanged()
+                })
+                viewModel.getCourse().observe(this, { course ->
+                    populateCourse(course)
+                })
             }
         }
 

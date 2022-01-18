@@ -1,5 +1,6 @@
 package com.khoirullatif.e_learnigacademy.ui.reader
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.khoirullatif.e_learnigacademy.data.ContentEntity
 import com.khoirullatif.e_learnigacademy.data.ModuleEntity
@@ -18,9 +19,9 @@ class CourseReaderViewModel(private val academyRepository: AcademyRepository) : 
         this.moduleId = moduleId
     }
 
-    fun getModules(): List<ModuleEntity> = academyRepository.getAllModulesByCourse(courseId)
+    fun getModules(): LiveData<List<ModuleEntity>> = academyRepository.getAllModulesByCourse(courseId)
 
-    fun getSelectedModule(): ModuleEntity {
+    fun getSelectedModule(): LiveData<ModuleEntity> {
         // SEBELUM PAKAI REPOSITORY
 //        lateinit var module: ModuleEntity
 //        val moduleEntities = getModules()

@@ -1,5 +1,6 @@
 package com.khoirullatif.e_learnigacademy.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.khoirullatif.e_learnigacademy.data.CourseEntity
 import com.khoirullatif.e_learnigacademy.data.ModuleEntity
@@ -14,7 +15,7 @@ class DetailCourseViewModel(private val academyRepository: AcademyRepository) : 
         this.courseId = id
     }
 
-    fun getCourse(): CourseEntity {
+    fun getCourse(): LiveData<CourseEntity> {
         //SEBELUM PAKAI REPOSITORY
 //        lateinit var course: CourseEntity
 //        val courseEntities = DataDummy.generateDummyCourses()
@@ -27,5 +28,5 @@ class DetailCourseViewModel(private val academyRepository: AcademyRepository) : 
         return academyRepository.getCourseWithModules(courseId)
     }
 
-    fun getModule(): List<ModuleEntity> = academyRepository.getAllModulesByCourse(courseId)
+    fun getModule(): LiveData<List<ModuleEntity>> = academyRepository.getAllModulesByCourse(courseId)
 }

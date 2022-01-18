@@ -50,7 +50,13 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         adapter = ModuleListAdapter(this)
         //ini dummy, nanti a14 akan diganti sesuai dengan posisi fragment
 //        populateRecyclerView(DataDummy.generateDummyModules("a14"))
-        populateRecyclerView(viewModel.getModules())//didn't need courseId parameter again 'cause course id have been add in CourseReaderActivity
+//        populateRecyclerView(viewModel.getModules())//didn't need courseId parameter again 'cause course id have been add in CourseReaderActivity
+
+        fragmentModuleListBinding.progressBar.visibility = View.VISIBLE
+        viewModel.getModules().observe(requireActivity(), { modules ->
+            fragmentModuleListBinding.progressBar.visibility = View.GONE
+            populateRecyclerView(modules)
+        })
     }
 
     override fun onAttach(context: Context) {
