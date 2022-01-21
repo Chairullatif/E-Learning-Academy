@@ -5,6 +5,7 @@ import android.os.Looper
 import com.khoirullatif.e_learnigacademy.data.source.remote.response.ContentResponse
 import com.khoirullatif.e_learnigacademy.data.source.remote.response.CourseResponse
 import com.khoirullatif.e_learnigacademy.data.source.remote.response.ModuleResponse
+import com.khoirullatif.e_learnigacademy.utils.EspressoIdlingResources
 import com.khoirullatif.e_learnigacademy.utils.JsonHelper
 
 // private constructor digunakan agar constructor hanya bisa digunakan untuk kelas ini saja
@@ -37,15 +38,30 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
 //    fun getContent(moduleId: String): ContentResponse = jsonHelper.loadContent(moduleId)
 
     fun getAllCourses(callback: LoadCoursesCallback) {
-        handler.postDelayed({callback.onAllCoursesReceived(jsonHelper.loadCourses())}, SERVICE_LATENCY_IN_MILLIS)
+        EspressoIdlingResources.increment()
+        handler.postDelayed(
+            {
+            callback.onAllCoursesReceived(jsonHelper.loadCourses())
+            EspressoIdlingResources.decrement()
+            }, SERVICE_LATENCY_IN_MILLIS)
     }
 
     fun getModules(courseId: String, callback: LoadModulesCallback) {
-        handler.postDelayed({callback.onAllModulesReceived(jsonHelper.loadModule(courseId))}, SERVICE_LATENCY_IN_MILLIS)
+        EspressoIdlingResources.increment()
+        handler.postDelayed(
+            {
+                callback.onAllModulesReceived(jsonHelper.loadModule(courseId))
+                EspressoIdlingResources.decrement()
+            }, SERVICE_LATENCY_IN_MILLIS)
     }
 
     fun getContent(moduleId: String, callback: LoadContentCallback) {
-        handler.postDelayed({callback.onContentReceived(jsonHelper.loadContent(moduleId))}, SERVICE_LATENCY_IN_MILLIS)
+        EspressoIdlingResources.increment()
+        handler.postDelayed(
+            {
+                callback.onContentReceived(jsonHelper.loadContent(moduleId))
+                EspressoIdlingResources.decrement()
+            }, SERVICE_LATENCY_IN_MILLIS)
     }
 
     interface LoadCoursesCallback {
